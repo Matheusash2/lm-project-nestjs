@@ -10,6 +10,6 @@ export class AuthService {
         MessagesHelper.AUTH_PASSWORD_OR_LOGIN_NOT_FOUND,
       );
     }
-    return dto;
+    return MessagesHelper.AUTH_LOGIN_SUCCESS;
   }
 }

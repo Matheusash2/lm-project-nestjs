@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": [],
+			"label": "npm: start",
+			"detail": "nest start"
+		},
+		{
+			"type": "npm",
+			"script": "start:prod",
+			"problemMatcher": [],
+			"label": "npm: start:prod",
+			"detail": "node dist/main"
+		}
+	]
+}
