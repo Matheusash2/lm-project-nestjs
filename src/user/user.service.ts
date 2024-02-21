@@ -23,7 +23,7 @@ export class UserService {
         };
     }
 
-    findUser(user: string) {
-        return this.prisma.register.findUnique({ where: { user } });
+    findUser(userName: string) {
+        return this.prisma.register.findUnique({ where: { userName } });
     }
 }

@@ -8,9 +8,10 @@ datasource db {
 }
 
 model register {
-id Int @id @default(autoincrement())
-user String @unique
+id String @id @default(cuid())
+userName String @unique
 password String
+name String
 
 @@map("registers")
 }
