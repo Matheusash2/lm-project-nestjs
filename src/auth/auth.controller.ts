@@ -9,14 +9,16 @@ import {
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AutoRequest } from './models/AutoRequest';
+import { IsPublic } from './decorators/is-public.decorator';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @IsPublic()
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(LocalAuthGuard)
   async login(@Request() req: AutoRequest) {
     return this.authService.login(req.user);
   }
