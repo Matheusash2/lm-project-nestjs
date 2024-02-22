@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { User } from 'src/user/entities/user.entity';
 
-export interface AutoRequest extends Request {
+export interface AuthRequest extends Request {
   user: User;
 }
