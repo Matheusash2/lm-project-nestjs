@@ -1,7 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 import { MessagesHelper } from '../helpers/messages.helper';
 
-export class LoginDto {
+export class LoginRequestBody {
   @IsNotEmpty({ message: MessagesHelper.AUTH_LOGIN_NOT_FOUND })
   userName: string;
 

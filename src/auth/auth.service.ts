@@ -4,12 +4,29 @@ import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedError } from './errors/unauthorized.error';
+import { UserPayload } from './models/UserPayload';
+import { JwtService } from '@nestjs/jwt';
+import { UserToken } from './models/UserToken';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
-  async login() {
-    return MessagesHelper.AUTH_LOGIN_SUCCESS;
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  login(user: User): UserToken {
+    const payload: UserPayload = {
+      sub: user.id,
+      userName: user.userName,
+      name: user.name,
+    };
+
+    const jwtToken = this.jwtService.sign(payload)
+    
+    return {
+      access_token: jwtToken
+    }
   }
 
   async validateUser(userName: string, password: string): Promise<User> {
