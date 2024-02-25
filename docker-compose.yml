@@ -1,6 +1,14 @@
 version: '2.24.5'
 
 services:
+  api-nest-lm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-lm
+    ports:
+      - '3000:3000'
+
   db-postgres-lm:
     image: postgres:16.2
     restart: always
@@ -14,20 +22,6 @@ services:
       POSTGRES_PASSWORD: postgres123
       POSTGRES_DB: dblm
 
-  api-nest-lm:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: nest-lm
-    environment:
-      - PORT=${PORT}
-    ports:
-      - '3001:3000'
-    depends_on:
-      - db-postgres-lm
-    volumes:
-      - ./src:/src/api
-
   pgadmin-lm:
     image: dpage/pgadmin4
     restart: always
@@ -37,8 +31,11 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=pgadmin4
     ports:
       - '5050:80'
-    depends_on:
-      - db-postgres-lm
+
+networks:
+  default:
+    name: nest-postgres-networks
 
 volumes:
-  db-lm:
+  postgres-lm:
+  pgadmin-lm:
