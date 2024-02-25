@@ -1,17 +1,15 @@
 FROM node:20-alpine
 
-WORKDIR /usr/src/api
+WORKDIR /api
 
 COPY . .
 
-COPY ./.env ./.env
-
 COPY package*.json ./
 
-RUN npm install --quiet --no-optional --no-fund --loglevel=error
+RUN npm install
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD [ "npm", "run", "start:dev" ]
