@@ -18,20 +18,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nest-docker-postgres-lm
+    container_name: nest-lm
     environment:
       - PORT=${PORT}
     ports:
-      - '3000:3000'
+      - '3001:3000'
     depends_on:
       - db-postgres-lm
     volumes:
-      - ./src:/api/src
+      - ./src:/src/api
 
   pgadmin-lm:
     image: dpage/pgadmin4
     restart: always
-    container_name: nest-pgadmin4
+    container_name: pgadmin4-lm
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=pgadmin4
