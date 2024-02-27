@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
 }
 
@@ -9,10 +9,21 @@ datasource db {
 }
 
 model register {
-id String @id @default(cuid())
-userName String @unique
-password String
-name String
+  id       String @id @default(cuid())
+  userName String @unique
+  password String
+  name     String
 
-@@map("registers")
+  @@map("registers")
+}
+
+model client {
+  id          String   @id @default(cuid())
+  name        String
+  lastName    String
+  dateOfBirth String
+  cpf         String   @unique
+  rg          String   @unique
+
+  @@map("clients")
 }
