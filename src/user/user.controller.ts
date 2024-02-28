@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, HttpStatus, Post, UseInterceptors } from '@
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dtos/register.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @ApiTags('user')
 @Controller('user')
@@ -10,6 +10,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @Post('register')
   @HttpCode(HttpStatus.OK)
   register(@Body() registerUserDto: RegisterUserDto) {

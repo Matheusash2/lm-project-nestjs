@@ -13,7 +13,8 @@ services:
     networks:
       - backend-nest-network
     volumes:
-      - .:/src/src/app
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     command: npm run start:dev
     env_file:
       - .env

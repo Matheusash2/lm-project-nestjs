@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ClientService } from './client.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { CreateClientDto } from './dtos/create-client.dto';
 
 @ApiTags('client')
@@ -10,6 +10,7 @@ export class ClientController {
     constructor(private readonly clientService: ClientService){}
 
     @UseInterceptors(CacheInterceptor)
+    @CacheTTL(60)
     @Post('create-client')
     @HttpCode(HttpStatus.OK)
     create(@Body() createClientDto: CreateClientDto){

@@ -12,7 +12,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
 import { IsPublic } from './decorators/is-public.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @ApiTags('auth')
 @Controller()
@@ -20,6 +20,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @IsPublic()
   @UseGuards(LocalAuthGuard)
   @Post('login')
