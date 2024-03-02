@@ -26,4 +26,8 @@ export class UserService {
     findUser(userName: string) {
         return this.prisma.register.findUnique({ where: { userName } });
     }
+
+    findUserById(id: string) {
+        return this.prisma.register.findUnique({ where: { id } });
+    }
 }

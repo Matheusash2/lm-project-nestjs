@@ -1,8 +1,9 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseInterceptors } from '@nestjs/common';
+import { BadGatewayException, Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dtos/register.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { UserMessagesHelper } from './helpers/messages.helper';
 
 @ApiTags('user')
 @Controller('user')
@@ -15,5 +16,23 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   register(@Body() registerUserDto: RegisterUserDto) {
     return this.userService.register(registerUserDto);
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @Get()
+  async getUser(@Request() req){
+    const {id} =  req?.user
+    const user = await this.userService.findUserById(id)
+
+    if(!user) {
+      throw new BadGatewayException(UserMessagesHelper.GET_USER_NOT_FOUND)
+    }
+
+    return {
+      userName: user.userName,
+      name: user.name,
+      id: user.id
+    }
   }
 }
