@@ -8,22 +8,161 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model register {
-  id       String @id @default(cuid())
-  userName String @unique
-  password String
-  name     String
+//Register models:
+
+model Register {
+  id             String          @id @default(cuid())
+  userName       String          @unique
+  password       String
+  email          String?         @unique
+  lastName       String?
+  dateOfBirth    String?
+  cpf            String?         @unique
+  rg             RG?
+  identification Identification?
+  contact        Contact[]
+  address        Address[]
+  createdAt      DateTime        @default(now())
 
   @@map("registers")
 }
 
-model client {
-  id          String   @id @default(cuid())
-  name        String
-  lastName    String
-  dateOfBirth String
-  cpf         String   @unique
-  rg          String   @unique
+model Identification {
+  id             String   @id @default(cuid())
+  fatherName     String
+  motherName     String
+  sex            String
+  maritalStatus  String
+  nationality    String
+  countryOfBirth String
+  stateOfBirth   String
+  cityOfBirth    String
+  registerId     String   @unique
+  register       Register @relation(fields: [registerId], references: [id])
+
+  @@map("identifications")
+}
+
+model RG {
+  id               String   @id @default(cuid())
+  number           String
+  emissionDate     String
+  issuingAuthority String
+  issuingState     String
+  registerId       String   @unique
+  register         Register @relation(fields: [registerId], references: [id])
+
+  @@map("RGs")
+}
+
+model Contact {
+  id         String   @id @default(cuid())
+  telephone  String
+  ddd        String
+  registerId String
+  register   Register @relation(fields: [registerId], references: [id])
+
+  @@map("contacts")
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  cep          String
+  city         String
+  state        String
+  registerId   String
+  register     Register @relation(fields: [registerId], references: [id])
+
+  @@map("address")
+}
+
+//Clients models:
+
+model Client {
+  id                   String                @id @default(cuid())
+  name                 String
+  lastName             String?
+  dateOfBirth          String?
+  cpf                  String?               @unique
+  inssPassword         String?
+  contracts            Contract[]
+  rgClient             RGClient?
+  identificationClient IdentificationClient?
+  contactClient        ContactClient[]
+  addressClient        AddressClient[]
+  createdAt            DateTime              @default(now())
 
   @@map("clients")
+}
+
+model Contract {
+  id             String @id @default(cuid())
+  proposalNumber String
+  bank           String
+  contractDate   String
+  valuePaid      Float
+  interest       Float
+  installments   Int
+  totalPaid      Float
+  commission     Float
+  currentCode    String
+  clientId       String
+  client         Client @relation(fields: [clientId], references: [id])
+}
+
+model IdentificationClient {
+  id             String @id @default(cuid())
+  fatherName     String
+  motherName     String
+  sex            String
+  maritalStatus  String
+  nationality    String
+  countryOfBirth String
+  stateOfBirth   String
+  cityOfBirth    String
+  clientId       String @unique
+  client         Client @relation(fields: [clientId], references: [id])
+
+  @@map("identificationsClients")
+}
+
+model RGClient {
+  id               String @id @default(cuid())
+  number           String
+  emissionDate     String
+  issuingAuthority String
+  issuingState     String
+  clientId         String @unique
+  client           Client @relation(fields: [clientId], references: [id])
+
+  @@map("RGsClients")
+}
+
+model ContactClient {
+  id        String @id @default(cuid())
+  telephone String
+  ddd       String
+  clientId  String
+  client    Client @relation(fields: [clientId], references: [id])
+
+  @@map("contactsClients")
+}
+
+model AddressClient {
+  id           String  @id @default(cuid())
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  cep          String
+  city         String
+  state        String
+  clientId     String
+  client       Client  @relation(fields: [clientId], references: [id])
+
+  @@map("addressClients")
 }
