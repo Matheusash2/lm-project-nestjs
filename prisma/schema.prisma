@@ -112,6 +112,8 @@ model Contract {
   currentCode    String
   clientId       String
   client         Client @relation(fields: [clientId], references: [id])
+
+  @@map("contracts")
 }
 
 model IdentificationClient {
