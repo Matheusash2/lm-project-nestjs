@@ -15,6 +15,7 @@ model Register {
   userName       String          @unique
   password       String
   email          String?         @unique
+  name           String?
   lastName       String?
   dateOfBirth    String?
   cpf            String?         @unique
