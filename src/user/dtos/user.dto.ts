@@ -25,10 +25,18 @@ export class UserDto extends User {
   password: string;
 
   @ApiProperty({
-    example: 'Matheus Santos',
-    description: 'Nome completo do usuário.',
+    example: 'Matheus',
+    description: 'Primeiro nome do usuário.',
   })
   @IsString()
   @MinLength(4, { message: UserMessagesHelper.REGISTER_NAME_NOT_VALID })
   name: string;
+
+  @ApiProperty({
+    example: 'Santos Soares',
+    description: 'Sobrenome do usuário.',
+  })
+  @IsString()
+  @MinLength(4, { message: UserMessagesHelper.REGISTER_NAME_NOT_VALID })
+  lastName: string;
 }

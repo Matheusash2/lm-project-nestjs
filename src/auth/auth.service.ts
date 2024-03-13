@@ -20,13 +20,15 @@ export class AuthService {
       sub: user.id,
       userName: user.userName,
       name: user.name,
+      lastName: user.lastName,
+      createdAt: user.createdAt,
     };
 
-    const jwtToken = this.jwtService.sign(payload)
-    
+    const jwtToken = this.jwtService.sign(payload);
+
     return {
-      access_token: jwtToken
-    }
+      access_token: jwtToken,
+    };
   }
 
   async validateUser(userName: string, password: string): Promise<User> {
