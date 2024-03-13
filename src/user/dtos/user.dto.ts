@@ -3,7 +3,7 @@ import { UserMessagesHelper } from '../helpers/messages.helper';
 import { User } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class RegisterUserDto extends User {
+export class UserDto extends User {
   @ApiProperty({
     example: 'matheusAuxiliar',
     description:

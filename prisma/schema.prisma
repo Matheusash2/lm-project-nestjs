@@ -10,12 +10,20 @@ datasource db {
 
 //Register models:
 
-model Register {
+model User {
+  id        String    @id @default(cuid())
+  userName  String    @unique
+  password  String
+  name      String?
+  createdAt DateTime  @default(now())
+  employee  Employee?
+
+  @@map("users")
+}
+
+model Employee {
   id             String          @id @default(cuid())
-  userName       String          @unique
-  password       String
   email          String?         @unique
-  name           String?
   lastName       String?
   dateOfBirth    String?
   cpf            String?         @unique
@@ -23,9 +31,10 @@ model Register {
   identification Identification?
   contact        Contact[]
   address        Address[]
-  createdAt      DateTime        @default(now())
+  userId         String          @unique
+  user           User            @relation(fields: [userId], references: [id])
 
-  @@map("registers")
+  @@map("employees")
 }
 
 model Identification {
@@ -38,8 +47,8 @@ model Identification {
   countryOfBirth String
   stateOfBirth   String
   cityOfBirth    String
-  registerId     String   @unique
-  register       Register @relation(fields: [registerId], references: [id])
+  employeeId     String   @unique
+  employee       Employee @relation(fields: [employeeId], references: [id])
 
   @@map("identifications")
 }
@@ -50,8 +59,8 @@ model RG {
   emissionDate     String
   issuingAuthority String
   issuingState     String
-  registerId       String   @unique
-  register         Register @relation(fields: [registerId], references: [id])
+  employeeId       String   @unique
+  employee         Employee @relation(fields: [employeeId], references: [id])
 
   @@map("RGs")
 }
@@ -60,8 +69,8 @@ model Contact {
   id         String   @id @default(cuid())
   telephone  String
   ddd        String
-  registerId String
-  register   Register @relation(fields: [registerId], references: [id])
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
 
   @@map("contacts")
 }
@@ -75,10 +84,10 @@ model Address {
   cep          String
   city         String
   state        String
-  registerId   String
-  register     Register @relation(fields: [registerId], references: [id])
+  employeeId   String
+  employee     Employee @relation(fields: [employeeId], references: [id])
 
-  @@map("address")
+  @@map("addresses")
 }
 
 //Clients models:
@@ -167,5 +176,5 @@ model AddressClient {
   clientId     String
   client       Client  @relation(fields: [clientId], references: [id])
 
-  @@map("addressClients")
+  @@map("addressesClients")
 }

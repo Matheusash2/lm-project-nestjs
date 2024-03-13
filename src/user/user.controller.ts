@@ -1,6 +1,6 @@
 import { BadGatewayException, Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
-import { RegisterUserDto } from './dtos/register.dto';
+import { UserDto } from './dtos/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { UserMessagesHelper } from './helpers/messages.helper';
@@ -14,8 +14,8 @@ export class UserController {
   @CacheTTL(60)
   @Post('register')
   @HttpCode(HttpStatus.OK)
-  register(@Body() registerUserDto: RegisterUserDto) {
-    return this.userService.register(registerUserDto);
+  register(@Body() userDto: UserDto) {
+    return this.userService.register(userDto);
   }
 
   @UseInterceptors(CacheInterceptor)

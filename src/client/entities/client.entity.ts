@@ -4,5 +4,4 @@ export class Client {
   lastName: string;
   dateOfBirth: string;
   cpf: string;
-  rg: string;
 }

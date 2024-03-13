@@ -10,7 +10,7 @@ export class ClientService {
 
     async createClient(createClientDto: CreateClientDto):Promise<Client>{
 
-        const data: Prisma.clientCreateInput = {
+        const data: Prisma.ClientCreateInput = {
             ...createClientDto
         }
 
