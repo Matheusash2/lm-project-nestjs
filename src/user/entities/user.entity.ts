@@ -1,3 +1,5 @@
+import { Employee } from './employee.entity';
+
 export class User {
   id?: string;
   userName: string;
@@ -5,4 +7,5 @@ export class User {
   name: string;
   lastName: string;
   createdAt?: Date;
+  employee?: Employee;
 }

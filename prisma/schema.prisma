@@ -25,7 +25,7 @@ model User {
 model Employee {
   id             String          @id @default(cuid())
   email          String?         @unique
-  dateOfBirth    String?
+  dateOfBirth    DateTime?
   cpf            String?         @unique
   rg             RG?
   identification Identification?
@@ -39,14 +39,14 @@ model Employee {
 
 model Identification {
   id             String   @id @default(cuid())
-  fatherName     String
-  motherName     String
-  sex            String
-  maritalStatus  String
-  nationality    String
-  countryOfBirth String
-  stateOfBirth   String
-  cityOfBirth    String
+  fatherName     String?
+  motherName     String?
+  sex            String?
+  maritalStatus  String?
+  nationality    String?
+  countryOfBirth String?
+  stateOfBirth   String?
+  cityOfBirth    String?
   employeeId     String   @unique
   employee       Employee @relation(fields: [employeeId], references: [id])
 
@@ -55,10 +55,10 @@ model Identification {
 
 model RG {
   id               String   @id @default(cuid())
-  number           String
-  emissionDate     String
-  issuingAuthority String
-  issuingState     String
+  number           String?
+  emissionDate     String?
+  issuingAuthority String?
+  issuingState     String?
   employeeId       String   @unique
   employee         Employee @relation(fields: [employeeId], references: [id])
 
@@ -67,8 +67,8 @@ model RG {
 
 model Contact {
   id         String   @id @default(cuid())
-  telephone  String
-  ddd        String
+  telephone  String?
+  ddd        String?
   employeeId String
   employee   Employee @relation(fields: [employeeId], references: [id])
 
@@ -77,13 +77,13 @@ model Contact {
 
 model Address {
   id           String   @id @default(cuid())
-  street       String
-  number       String
+  street       String?
+  number       String?
   complement   String?
-  neighborhood String
-  cep          String
-  city         String
-  state        String
+  neighborhood String?
+  cep          String?
+  city         String?
+  state        String?
   employeeId   String
   employee     Employee @relation(fields: [employeeId], references: [id])
 
@@ -96,7 +96,7 @@ model Client {
   id                   String                @id @default(cuid())
   name                 String
   lastName             String?
-  dateOfBirth          String?
+  dateOfBirth          DateTime?
   cpf                  String?               @unique
   inssPassword         String?
   contracts            Contract[]
@@ -111,15 +111,15 @@ model Client {
 
 model Contract {
   id             String @id @default(cuid())
-  proposalNumber String
-  bank           String
-  contractDate   String
-  valuePaid      Float
-  interest       Float
-  installments   Int
-  totalPaid      Float
-  commission     Float
-  currentCode    String
+  proposalNumber String?
+  bank           String?
+  contractDate   String?
+  valuePaid      Float?
+  interest       Float?
+  installments   Int?
+  totalPaid      Float?
+  commission     Float?
+  currentCode    String?
   clientId       String
   client         Client @relation(fields: [clientId], references: [id])
 
@@ -128,14 +128,14 @@ model Contract {
 
 model IdentificationClient {
   id             String @id @default(cuid())
-  fatherName     String
-  motherName     String
-  sex            String
-  maritalStatus  String
-  nationality    String
-  countryOfBirth String
-  stateOfBirth   String
-  cityOfBirth    String
+  fatherName     String?
+  motherName     String?
+  sex            String?
+  maritalStatus  String?
+  nationality    String?
+  countryOfBirth String?
+  stateOfBirth   String?
+  cityOfBirth    String?
   clientId       String @unique
   client         Client @relation(fields: [clientId], references: [id])
 
@@ -144,10 +144,10 @@ model IdentificationClient {
 
 model RGClient {
   id               String @id @default(cuid())
-  number           String
-  emissionDate     String
-  issuingAuthority String
-  issuingState     String
+  number           String?
+  emissionDate     String?
+  issuingAuthority String?
+  issuingState     String?
   clientId         String @unique
   client           Client @relation(fields: [clientId], references: [id])
 
@@ -156,8 +156,8 @@ model RGClient {
 
 model ContactClient {
   id        String @id @default(cuid())
-  telephone String
-  ddd       String
+  telephone String?
+  ddd       String?
   clientId  String
   client    Client @relation(fields: [clientId], references: [id])
 
@@ -166,13 +166,13 @@ model ContactClient {
 
 model AddressClient {
   id           String  @id @default(cuid())
-  street       String
-  number       String
+  street       String?
+  number       String?
   complement   String?
-  neighborhood String
-  cep          String
-  city         String
-  state        String
+  neighborhood String?
+  cep          String?
+  city         String?
+  state        String?
   clientId     String
   client       Client  @relation(fields: [clientId], references: [id])
 

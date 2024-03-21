@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "npx prisma generate",
     "prepare": "husky",
-    "fix": "prettier --write ./src && eslint --fix ./src"
+    "fix": "prettier --write ./src",
+    "fix-lint": "eslint --fix ./src"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",
