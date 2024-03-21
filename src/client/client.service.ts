@@ -6,22 +6,21 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ClientService {
-    constructor(private readonly prisma: PrismaService){}
+  constructor(private readonly prisma: PrismaService) {}
 
-    async createClient(createClientDto: CreateClientDto):Promise<Client>{
+  async createClient(createClientDto: CreateClientDto): Promise<Client> {
+    const data: Prisma.ClientCreateInput = {
+      ...createClientDto,
+    };
 
-        const data: Prisma.ClientCreateInput = {
-            ...createClientDto
-        }
+    const createClientRegister = await this.prisma.client.create({ data });
 
-        const createClientRegister = await this.prisma.client.create({data});
+    return {
+      ...createClientRegister,
+    };
+  }
 
-        return {
-            ...createClientRegister
-        }
-    }
-    
-    findClientCpf(cpf: string){
-        return this.prisma.client.findUnique({where:{cpf}})
-    }
+  findClientCpf(cpf: string) {
+    return this.prisma.client.findUnique({ where: { cpf } });
+  }
 }

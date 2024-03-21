@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Client } from '../entities/client.entity';
-import { IsDate, IsString, MinLength } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 import { ClientMessagesHelper } from '../helpers/messages.helper';
 
 export class CreateClientDto extends Client {

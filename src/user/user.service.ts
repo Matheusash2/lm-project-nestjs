@@ -7,27 +7,27 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-    constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-    async register(userDto: UserDto): Promise<User> {
-        const data: Prisma.UserCreateInput = {
-            ...userDto,
-            password: await bcrypt.hash(userDto.password, 10),
-        };
+  async register(userDto: UserDto): Promise<User> {
+    const data: Prisma.UserCreateInput = {
+      ...userDto,
+      password: await bcrypt.hash(userDto.password, 10),
+    };
 
-        const createUser = await this.prisma.user.create({ data })
+    const createUser = await this.prisma.user.create({ data });
 
-        return {
-            ...createUser,
-            password: undefined,
-        };
-    }
+    return {
+      ...createUser,
+      password: undefined,
+    };
+  }
 
-    findUser(userName: string) {
-        return this.prisma.user.findUnique({ where: { userName } });
-    }
+  findUser(userName: string) {
+    return this.prisma.user.findUnique({ where: { userName } });
+  }
 
-    findUserById(id: string) {
-        return this.prisma.user.findUnique({ where: { id } });
-    }
+  findUserById(id: string) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
 }

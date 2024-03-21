@@ -1,3 +1,1 @@
-export class employee {
-    
-}
+export class employee {}

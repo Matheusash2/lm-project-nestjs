@@ -22,9 +22,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Documentação com Swagger - Gerenciador LM Emprestimos')
-    .setDescription(
-      'Descrição da API do gerenciador LM emprestimos.',
-    )
+    .setDescription('Descrição da API do gerenciador LM emprestimos.')
     .setVersion('1.0')
     .addTag('users')
     .build();
