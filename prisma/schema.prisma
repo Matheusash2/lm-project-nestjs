@@ -25,7 +25,7 @@ model User {
 model Employee {
   id             String          @id @default(cuid())
   email          String?         @unique
-  dateOfBirth    DateTime?
+  dateOfBirth    String?
   cpf            String?         @unique
   rg             RG?
   identification Identification?
@@ -96,7 +96,7 @@ model Client {
   id                   String                @id @default(cuid())
   name                 String
   lastName             String?
-  dateOfBirth          DateTime?
+  dateOfBirth          String?
   cpf                  String?               @unique
   inssPassword         String?
   contracts            Contract[]
