@@ -40,8 +40,27 @@ export class UserController {
 
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60)
-  @Get(':id')
+  @Get()
   async getUser(@Request() req) {
+    const { id } = req?.user;
+    const user = await this.userService.findUserById(id);
+
+    if (!user) {
+      throw new BadGatewayException(UserMessagesHelper.GET_USER_NOT_FOUND);
+    }
+
+    return {
+      id: user.id,
+      userName: user.userName,
+      name: user.name,
+      lastName: user.lastName,
+    };
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @Get(':id')
+  async getUserId(@Request() req) {
     const { id } = req?.user;
     const user = await this.userService.findUserById(id);
 
