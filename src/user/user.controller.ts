@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Request,
   UseInterceptors,
@@ -14,6 +15,7 @@ import { UserDto } from './dtos/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { UserMessagesHelper } from './helpers/messages.helper';
+import { EmployeeDto } from './dtos/employee.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -30,7 +32,15 @@ export class UserController {
 
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60)
-  @Get()
+  @Post('employee')
+  @HttpCode(HttpStatus.OK)
+  employee(@Body() employeeDto: EmployeeDto) {
+    return this.userService.createEmployee(employeeDto);
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @Get(':id')
   async getUser(@Request() req) {
     const { id } = req?.user;
     const user = await this.userService.findUserById(id);
@@ -44,6 +54,27 @@ export class UserController {
       userName: user.userName,
       name: user.name,
       lastName: user.lastName,
+    };
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @Get('employee/:id')
+  async getEmployee(@Param() params) {
+    const { id } = params;
+    console.log(id);
+    const employee = await this.userService.findEmployeeByUserId(id);
+
+    if (!employee) {
+      throw new BadGatewayException(UserMessagesHelper.GET_USER_NOT_FOUND);
+    }
+
+    return {
+      id: employee.id,
+      email: employee.email,
+      dateOfBirth: employee.dateOfBirth,
+      cpf: employee.cpf,
+      userId: employee.userId,
     };
   }
 }

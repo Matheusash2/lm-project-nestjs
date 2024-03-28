@@ -6,7 +6,7 @@ import { RG } from './rg.entity';
 export class Employee {
   id?: string;
   email?: string;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
   cpf?: string;
   rg?: RG;
   identification?: Identification;
